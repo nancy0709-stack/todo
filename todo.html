@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 400px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .btn-small {
+            font-size: 14px;
+            padding: 3px 8px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2 class="text-center">To-Do List</h2>
+        
+        <div class="mb-3">
+            <input type="text" id="taskInput" class="form-control" placeholder="Add a new task">
+            <button class="btn btn-primary mt-2 w-100" onclick="addTask()">Add Task</button>
+        </div>
+
+        <h4>Remaining Tasks</h4>
+        <ul id="taskList"></ul>
+
+        <h4>Completed Tasks</h4>
+        <ul id="completedList"></ul>
+    </div>
+
+    <script>
+        function addTask() {
+            let taskInput = document.getElementById("taskInput");
+            let taskList = document.getElementById("taskList");
+
+            if (taskInput.value.trim() === "") return;
+
+            let li = document.createElement("li");
+            li.innerHTML = `${taskInput.value} 
+                <div>
+                    <button class="btn btn-success btn-small" onclick="markDone(this)">✔ Done</button>
+                    <button class="btn btn-danger btn-small" onclick="deleteTask(this)">❌ Delete</button>
+                </div>`;
+
+            taskList.appendChild(li);
+            taskInput.value = "";
+        }
+
+        function markDone(button) {
+            let li = button.parentElement.parentElement;
+            let completedList = document.getElementById("completedList");
+            button.remove(); // Remove 'Done' button after marking
+            completedList.appendChild(li);
+        }
+
+        function deleteTask(button) {
+            let li = button.parentElement.parentElement;
+            li.remove();
+        }
+    </script>
+
+</body>
+</html>
